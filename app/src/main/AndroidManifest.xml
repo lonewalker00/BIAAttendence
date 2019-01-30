@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="in8443.httpsboxinall.biaattendence">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/main_logo_7"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity0_Buttons_Home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity1_Home"
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".MainActivity0_Buttons_Home"/>
+        <activity
+            android:name=".MainActivity2_toadyAttendence"
+            android:parentActivityName=".MainActivity1_Home"/>
+        <activity android:name=".MainActivity3_Edit_Members" />
+        <activity
+            android:name=".MainActivity4_ChangePasswordActivity"
+            android:parentActivityName=".MainActivity3_Edit_Members" />
+        <activity android:name=".MainActivity3_Edit_Members_List" />
+        <activity
+            android:name=".MainActivity5_customAttendenceRecord"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity0_Buttons_Home">
+        </activity>
+    </application>
+
+</manifest>

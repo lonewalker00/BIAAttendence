@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BIA Attendence</string>
+    <string name="url">jdbc:mysql://192.168.43.132/bia</string>
+    <string name="user">root</string>
+    <string name="pass"></string>
+
+</resources>
