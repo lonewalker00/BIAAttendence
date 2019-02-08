@@ -479,7 +479,7 @@ public class MainActivity5_customAttendenceRecord extends AppCompatActivity {
             @Override
             public void run() {
                 if (isSuccess4) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date date = null;
                     try {
                         date = sdf.parse(minDate);
