@@ -52,6 +52,7 @@ public class MainActivity3_Edit_Members extends Activity {
     Button login;
     ProgressDialog progressDialog;
     Boolean isSuccess = false;
+    Boolean check = true;
     /*Connection con = null;
     String sqlURL = null;
     String sqlUser = null;
@@ -113,7 +114,9 @@ public class MainActivity3_Edit_Members extends Activity {
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {}
+            public void onErrorResponse(VolleyError error) {
+                check = false;
+            }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -128,12 +131,14 @@ public class MainActivity3_Edit_Members extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (isSuccess){
-                    Toast.makeText(MainActivity3_Edit_Members.this, "Welcome !!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity3_Edit_Members.this,MainActivity3_Edit_Members_List.class));
-                } else {
-                    Toast.makeText(MainActivity3_Edit_Members.this, "Wrong Password. Try Again !!", Toast.LENGTH_LONG).show();
-                }
+                if (check) {
+                    if (isSuccess) {
+                        Toast.makeText(MainActivity3_Edit_Members.this, "Welcome !!", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(MainActivity3_Edit_Members.this, MainActivity3_Edit_Members_List.class));
+                    } else {
+                        Toast.makeText(MainActivity3_Edit_Members.this, "Wrong Password. Try Again !!", Toast.LENGTH_LONG).show();
+                    }
+                } else Toast.makeText(MainActivity3_Edit_Members.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
                 progressDialog.hide();
                 ET_USER_PASS.setText("");
             }
