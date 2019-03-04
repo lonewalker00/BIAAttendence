@@ -133,7 +133,6 @@ public class MainActivity3_Edit_Members extends Activity {
             public void run() {
                 if (check) {
                     if (isSuccess) {
-                        Toast.makeText(MainActivity3_Edit_Members.this, "Welcome !!", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(MainActivity3_Edit_Members.this, MainActivity3_Edit_Members_List.class));
                     } else {
                         Toast.makeText(MainActivity3_Edit_Members.this, "Wrong Password. Try Again !!", Toast.LENGTH_LONG).show();

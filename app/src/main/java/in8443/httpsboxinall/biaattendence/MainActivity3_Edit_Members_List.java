@@ -58,6 +58,7 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
     Boolean isSuccess2 = true;
     Boolean isSuccess3 = true;
     Boolean isSuccess4 = true;
+    Boolean welcome = true;
     /*Connection con = null;
     String sqlURL = null;//IPv4 Address. . . . . . . . . . . : 192.168.225.24....192.168.43.132
     String sqlUser = null;
@@ -164,6 +165,10 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
                 if (isSuccess1) {
                     myAdapter = new AdapterEditMembersList(MainActivity3_Edit_Members_List.this, R.layout.item_list_edit_members, name, idno);
                     listView.setAdapter(myAdapter);
+                    if (welcome){
+                        Toast.makeText(MainActivity3_Edit_Members_List.this, "Welcome !!", Toast.LENGTH_LONG).show();
+                        welcome = false;
+                    }
                 } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
                 swipeRefreshLayout.setRefreshing(false);
                 progressDialog.hide();
