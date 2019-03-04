@@ -52,9 +52,12 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
     String [] idno;
     Boolean isInserted  = false;
     Boolean isDeleted = false;
+    Boolean isTodayAttendenceMarked = false;
+    Boolean isTodayAttendenceDeleted = false;
     Boolean isSuccess1 = true;
     Boolean isSuccess2 = true;
     Boolean isSuccess3 = true;
+    Boolean isSuccess4 = true;
     /*Connection con = null;
     String sqlURL = null;//IPv4 Address. . . . . . . . . . . : 192.168.225.24....192.168.43.132
     String sqlUser = null;
@@ -89,8 +92,16 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity3_Edit_Members_List.this);
-                alert.setMessage("Delete this Member ?").setCancelable(false)
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                alert.setMessage("Choose your action ?").setCancelable(false)
+                        .setPositiveButton("Delete  Today's  Attendence", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!isOnline()){
+                                    Toast.makeText(MainActivity3_Edit_Members_List.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
+                                } else delete_today_attendence(""+idno[position]);
+                            }
+                        })
+                        .setNegativeButton("Delete  member", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (!isOnline()){
@@ -98,9 +109,9 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
                                 } else delete_member(""+idno[position]);
                             }
                         })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialog, int i) {
                                 dialog.cancel();
                             }
                         });
@@ -212,7 +223,7 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
                 } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
                 progressDialog.hide();
             }
-        }, 2500);
+        }, 3000);
 
     }
 
@@ -262,6 +273,56 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
                 progressDialog.hide();
             }
         }, 2500);
+    }
+
+    public void delete_today_attendence(final String member_position){
+        progressDialog.setMessage("Deleting");
+        progressDialog.show();
+        String url = "https://boxinall.in/BIAOfficeAttendence/delete_today_attendence.php";
+        StringRequest stringRequest = new StringRequest(1, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    if (jsonArray.getJSONObject(0).getString("isAttendenceMarked").equals("Y")) isTodayAttendenceMarked = true;
+                    else isTodayAttendenceMarked = false;
+                    if (jsonArray.getJSONObject(0).getString("isDeleted").equals("Y")) isTodayAttendenceDeleted = true;
+                    else isTodayAttendenceMarked = false;
+                    isSuccess4 = true;
+                } catch (JSONException e) {e.printStackTrace();}
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                isSuccess4 = false;
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("id", member_position);
+                return map;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity3_Edit_Members_List.this);
+        requestQueue.add(stringRequest);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isSuccess4) {
+                    if (isTodayAttendenceMarked){
+                        if (isTodayAttendenceDeleted) {
+                            Toast.makeText(MainActivity3_Edit_Members_List.this, "Deleted Successfully", Toast.LENGTH_LONG).show();
+                        } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Can't delete. Issue occurred !!", Toast.LENGTH_LONG).show();
+                    } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Today's Attendence isn't marked !!", Toast.LENGTH_LONG).show();
+                } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
+                progressDialog.hide();
+            }
+        }, 3000);
+        //Toast.makeText(MainActivity3_Edit_Members_List.this, "Deleted Today's Attendence", Toast.LENGTH_LONG).show();
     }
 
     @Override
