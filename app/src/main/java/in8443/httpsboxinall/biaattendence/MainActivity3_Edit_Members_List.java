@@ -315,7 +315,7 @@ public class MainActivity3_Edit_Members_List extends AppCompatActivity implement
                 if (isSuccess4) {
                     if (isTodayAttendenceMarked){
                         if (isTodayAttendenceDeleted) {
-                            Toast.makeText(MainActivity3_Edit_Members_List.this, "Deleted Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity3_Edit_Members_List.this, "Today's Attendence deleted Successfully", Toast.LENGTH_LONG).show();
                         } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Can't delete. Issue occurred !!", Toast.LENGTH_LONG).show();
                     } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Today's Attendence isn't marked !!", Toast.LENGTH_LONG).show();
                 } else Toast.makeText(MainActivity3_Edit_Members_List.this, "Check your internet connection !!", Toast.LENGTH_LONG).show();
